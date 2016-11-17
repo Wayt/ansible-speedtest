@@ -601,3 +601,68 @@ sys	0m0.628s
 $ cat /etc/ansible-benchmark/firewall.conf.* | wc -l
 10
 ```
+
+## Benchmark using puppet
+
+See `puppet` directory
+
+```bash
+$ puppet --version
+3.7.2
+```
+
+from 0 to 100000 using 10 files, 10000 per file:
+
+```bash
+$ time puppet apply manifests/site.pp --modulepath=modules
+Notice: Compiled catalog for test-max-ansible.local in environment production in 1.02 seconds
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.5]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.7]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.8]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.1]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.4]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.10]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.2]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.9]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.3]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.6]/ensure: defined content as '{md5}1171c16fe2002399cb7c6fa3ce891886'
+Notice: Finished catalog run in 0.27 seconds
+
+real	0m2.319s
+user	0m1.864s
+sys	0m0.220s
+```
+
+from 100000 to 100000 using 10 files, 10000 per file (no changes):
+
+```bash
+$ time puppet apply manifests/site.pp --modulepath=modules
+Notice: Compiled catalog for test-max-ansible.local in environment production in 1.03 seconds
+Notice: Finished catalog run in 0.07 seconds
+
+real	0m2.110s
+user	0m1.776s
+sys	0m0.184s
+```
+
+from 0 to 10000 using 10 files, 1000 per file:
+
+```bash
+$ time puppet apply manifests/site.pp --modulepath=modules
+Notice: Compiled catalog for test-max-ansible.local in environment production in 0.26 seconds
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.5]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.7]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.8]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.1]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.4]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.10]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.2]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.9]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.3]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: /Stage[main]/Config/File[/etc/puppet-benchmark/firewall.conf.6]/ensure: defined content as '{md5}4f19d463649940385a4175b372b163a7'
+Notice: Finished catalog run in 0.15 seconds
+
+real	0m1.510s
+user	0m1.080s
+sys	0m0.184s
+```
