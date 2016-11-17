@@ -1,0 +1,4 @@
+{% for entry in firewall %}
+{{ entry['cidr'] }} {{ entry['action'] }}{% if 'comment' in entry %} # {{ entry['comment'] }}{% endif %}
+
+{% endfor %}

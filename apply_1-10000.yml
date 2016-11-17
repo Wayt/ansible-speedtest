@@ -1,0 +1,11 @@
+---
+
+- hosts: localhost
+  connection: local
+  vars:
+    config_files:
+      - firewall.conf
+  vars_files: 
+    - vars/10000firewall.yml
+  roles:
+    - config

@@ -1,0 +1,18 @@
+---
+
+- hosts: localhost
+  connection: local
+  vars:
+    config_files:
+      - firewall.conf.1
+      - firewall.conf.2
+      - firewall.conf.3
+      - firewall.conf.4
+      - firewall.conf.5
+      - firewall.conf.6
+      - firewall.conf.7
+      - firewall.conf.8
+      - firewall.conf.9
+      - firewall.conf.10
+  roles:
+    - config

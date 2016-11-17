@@ -1,0 +1,15 @@
+---
+
+- name: "Ensure {{ config_dir }} directory"
+  file:
+    path: "{{ config_dir }}"
+    state: directory
+  tags: [configuration]
+    
+
+- name: Write firewall.conf
+  template: 
+    src: firewall.conf.j2
+    dest: "{{ config_dir }}/{{ item }}"
+  with_items: "{{ config_files }}"
+  tags: [configuration]

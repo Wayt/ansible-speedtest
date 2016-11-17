@@ -1,0 +1,11 @@
+---
+
+config_dir: '/etc/ansible-benchmark'
+
+config_files:
+  - firewall.conf
+
+firewall:
+  - cidr: 9.9.9.9/32
+    comment: This is a configuration sample
+    action: deny
